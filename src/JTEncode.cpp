@@ -35,7 +35,7 @@
 #include <avr/pgmspace.h>
 #endif
 
-#include "Arduino.h"
+//#include "Arduino.h"
 
 // Define an upper bound on the number of glyphs.  Defining it this
 // way allows adding characters without having to update a hard-coded
@@ -245,7 +245,7 @@ void JTEncode::fsq_encode(const char * from_call, const char * message, uint8_t 
   char tx_buffer[155];
   char * tx_message;
   uint16_t symbol_pos = 0;
-  uint8_t i, fch, vcode1, vcode2, tone;
+  uint8_t i, fch, vcode1, vcode2;
   uint8_t cur_tone = 0;
 
   // Clear out the transmit buffer
@@ -332,7 +332,7 @@ void JTEncode::fsq_dir_encode(const char * from_call, const char * to_call, cons
   char tx_buffer[155];
   char * tx_message;
   uint16_t symbol_pos = 0;
-  uint8_t i, fch, vcode1, vcode2, tone, from_call_crc;
+  uint8_t i, fch, vcode1, vcode2, from_call_crc;
   uint8_t cur_tone = 0;
 
   // Generate a CRC on from_call
@@ -420,8 +420,6 @@ void JTEncode::fsq_dir_encode(const char * from_call, const char * to_call, cons
  */
 void JTEncode::ft8_encode(const char * msg, uint8_t * symbols)
 {
-  uint8_t i;
-
   char message[19];
   memset(message, 0, 19);
   strcpy(message, msg);
@@ -1010,7 +1008,7 @@ void JTEncode::jt65_interleave(uint8_t * s)
 
 void JTEncode::jt9_interleave(uint8_t * s)
 {
-  uint8_t i, j;
+  uint8_t i;
   uint8_t d[JT9_BIT_COUNT];
 
   // Do the interleave
@@ -1373,7 +1371,7 @@ uint8_t JTEncode::crc8(const char * text)
   uint8_t ch;
 
   int i;
-  for(i = 0; i < strlen(text); i++)
+  for(i = 0; i < (int)strlen(text); i++)
   {
     ch = text[i];
     //#if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__) || defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega16U4__)

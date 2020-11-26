@@ -27,12 +27,20 @@
 #include "int.h"
 #include "rs_common.h"
 
+// Ignore this include when building on STM32
+#ifndef STM32F1
 #include "Arduino.h"
+#endif
 
 #include <stdint.h>
 
 #if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__) || defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega16U4__)
 #include <avr/pgmspace.h>
+#else
+// When building outside of the ATmega world turn off the PROGMEM feature
+// and just use normal memory.
+#define PROGMEM
+#define pgm_read_byte(addr) (*(const unsigned char *)(addr))
 #endif
 
 #define JT65_SYMBOL_COUNT                   126
